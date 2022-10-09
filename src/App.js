@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
-  const onClick = () => setCount((current) => current + 1);
+  const onClick = () => setCount((prev) => prev + 1);
+  console.log("I run all the time");
+  useEffect(() => {
+    console.log("CALL");
+  }, []);
   return (
     <div>
       <h1>{count}</h1>
