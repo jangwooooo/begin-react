@@ -1,34 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setCount((prev) => prev + 1);
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
   const onChange = (event) => {
-    setKeyword(event.target.value);
+    setToDo(event.target.value);
   };
-  useEffect(() => {
-    console.log("i run only once");
-  }, []);
-  useEffect(() => {
-    console.log("I run when 'keyword' changes");
-  }, [keyword]);
-  useEffect(() => {
-    console.log("I run when 'count' changes");
-  }, [count]);
-  useEffect(() => {
-    console.log("I run when 'keyword' or 'count' changes");
-  }, [keyword, count]);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    setToDos((toDos) => [...toDos, toDo]);
+    setToDo("");
+  };
   return (
     <div>
-      <input
-        value={keyword}
-        placeholder="Search here.."
-        type="text"
-        onChange={onChange}
-      ></input>
-      <h1>{count}</h1>
-      <button onClick={onClick}>Click me</button>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          value={toDo}
+          onChange={onChange}
+          type="text"
+          placeholder="Write your to do"
+        />
+        <button>Add To Do</button>
+      </form>
     </div>
   );
 }
